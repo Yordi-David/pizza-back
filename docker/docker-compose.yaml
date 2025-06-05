@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ${DB_PASSWORD}
+      MSSQL_PID: Developer
+    ports:
+      - "${DB_SERVER_PORT}:1433"
+    
+
+  mssql-tools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./setup.sql:/usr/src/app/setup.sql
+    entrypoint: /bin/bash -c " \
+      sleep 30; \
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U ${DB_USER} -P ${DB_PASSWORD} -d master -i /usr/src/app/setup.sql"
