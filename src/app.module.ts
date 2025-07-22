@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppConfig, DbConfig } from './config';
+import { PizzaModule } from './modules/pizza/pizza.module';
 
 @Module({
 	imports: [
@@ -18,7 +19,8 @@ import { AppConfig, DbConfig } from './config';
 				...configService.get('database')
 			}),
 			inject: [ConfigService]
-		})
+		}),
+		PizzaModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
