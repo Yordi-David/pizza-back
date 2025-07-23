@@ -1,14 +1,16 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PizzaEntity } from "../entities";
-import { Repository } from "typeorm";
 import { from, Observable } from "rxjs";
+import { PizzaRepository } from "../repositories/pizza.repository";
 
 @Injectable()
 export class PizzaService {
-    constructor(@InjectRepository(PizzaEntity) private pizzaService: Repository<PizzaEntity>) {}
+    constructor(
+        @InjectRepository(PizzaEntity) private pizzaRepository: PizzaRepository,
+    ) {}
 
     getAll(): Observable<PizzaEntity[]> {
-        return from(this.pizzaService.find())
+        return from(this.pizzaRepository.find({}));
     }
 }

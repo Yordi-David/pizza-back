@@ -1,7 +1,5 @@
-import { PizzaEntity } from './pizza.entity';
+import { PizzaEntity } from "./pizza.entity";
 
-export const entities = [
-    PizzaEntity
-]
+export const entities = [PizzaEntity];
 
-export * from './pizza.entity';
+export * from "./pizza.entity";

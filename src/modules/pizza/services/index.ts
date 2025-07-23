@@ -1,5 +1,3 @@
 import { PizzaService } from "./pizza.service";
 
-export const services = [
-    PizzaService
-];
+export const services = [PizzaService];

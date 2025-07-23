@@ -1,29 +1,34 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ToppingEntity } from './topping.entity';
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    PrimaryGeneratedColumn,
+} from "typeorm";
+import { ToppingEntity } from "./topping.entity";
 
-@Entity({name: 'Pizza'})
+@Entity({ name: "Pizza" })
 export class PizzaEntity {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn("uuid")
     public id: string;
 
-    @Column({name: 'name'})
+    @Column({ name: "name" })
     public name: string;
 
-    @ManyToMany(
-        () => ToppingEntity,
-        topping => {},
-        {onDelete: 'NO ACTION', onUpdate: 'NO ACTION'}
-    )
+    @ManyToMany(() => ToppingEntity, (topping) => {}, {
+        onDelete: "NO ACTION",
+        onUpdate: "NO ACTION",
+    })
     @JoinTable({
-        name: 'PizzaToppings',
+        name: "PizzaToppings",
         joinColumn: {
-            name: 'pizzaId',
-            referencedColumnName: 'id'
+            name: "pizzaId",
+            referencedColumnName: "id",
         },
         inverseJoinColumn: {
-            name: 'toppingId',
-            referencedColumnName: 'id'
-        }
+            name: "toppingId",
+            referencedColumnName: "id",
+        },
     })
     toppings: ToppingEntity[];
 }
