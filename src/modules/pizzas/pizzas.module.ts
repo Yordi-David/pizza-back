@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
-import { controllers } from "./controllers/index";
 import { services } from "./services/index";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { repositories } from "../pizzas/repositories/index";
 import { entities } from "./entities/index";
-import { repositories } from "./repositories/index";
+import { PizzasController } from "./pizzas.controller";
 
 @Module({
     imports: [TypeOrmModule.forFeature([...entities])],
-    controllers: [...controllers],
+    controllers: [PizzasController],
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     providers: [...services, ...repositories],
 })
-export class PizzaModule {}
+export class PizzasModule {}

@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppConfig, DbConfig } from "./config";
-import { PizzaModule } from "./modules/pizza/pizza.module";
+import { PizzasModule } from "./modules/pizzas/pizzas.module";
 
 @Module({
     imports: [
@@ -21,9 +19,9 @@ import { PizzaModule } from "./modules/pizza/pizza.module";
             }),
             inject: [ConfigService],
         }),
-        PizzaModule,
+        PizzasModule,
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [],
+    providers: [],
 })
 export class AppModule {}

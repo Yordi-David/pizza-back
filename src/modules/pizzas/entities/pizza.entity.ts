@@ -1,3 +1,4 @@
+import { ToppingEntity } from "../../toppings/entities/topping.entity";
 import {
     Column,
     Entity,
@@ -5,7 +6,6 @@ import {
     ManyToMany,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { ToppingEntity } from "./topping.entity";
 
 @Entity({ name: "Pizza" })
 export class PizzaEntity {
