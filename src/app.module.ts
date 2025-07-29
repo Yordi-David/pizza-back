@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppConfig, DbConfig } from "./config";
 import { PizzasModule } from "./modules/pizzas/pizzas.module";
+import { ToppingsModule } from "./modules/toppings/toppings.module";
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { PizzasModule } from "./modules/pizzas/pizzas.module";
             inject: [ConfigService],
         }),
         PizzasModule,
+        ToppingsModule,
     ],
     controllers: [],
     providers: [],

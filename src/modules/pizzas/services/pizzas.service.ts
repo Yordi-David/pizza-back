@@ -12,8 +12,10 @@ export class PizzasService {
         @InjectRepository(PizzaEntity) private pizzaRepository: PizzaRepository,
     ) {}
 
-    create(createPizzaDto: CreatePizzaDto) {
-        return "This action adds a new pizza";
+    async create(createPizzaDto: CreatePizzaDto) {
+        await this.pizzaRepository.save(
+            this.pizzaRepository.create(createPizzaDto),
+        );
     }
 
     findAll() {

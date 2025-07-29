@@ -1,11 +1,11 @@
 import {
-    Controller,
-    Get,
-    Post,
     Body,
-    Patch,
-    Param,
+    Controller,
     Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
 } from "@nestjs/common";
 import { CreatePizzaDto } from "./dto/create-pizza.dto";
 import { UpdatePizzaDto } from "./dto/update-pizza.dto";
@@ -17,31 +17,33 @@ export class PizzasController {
 
     @Post()
     create(@Body() createPizzaDto: CreatePizzaDto) {
+        console.log(createPizzaDto);
+        
         return this.pizzasService.create(createPizzaDto);
     }
 
     @Get()
     findAll() {
-        // return this.pizzaService.getAll()
-        return [
-            {
-                name: "The Inferno",
-                toppings: [
-                    "chili",
-                    // "bacon",
-                    // "mushroom",
-                    // "basil",
-                    // "pepperoni",
-                    // "olive",
-                    // "sweetcorn",
-                    // "anchovy",
-                    // "mozzarella",
-                    // "pepper",
-                    // "tomato",
-                ],
-                id: 1,
-            },
-        ];
+        return this.pizzasService.findAll();
+        // return [
+        //     {
+        //         name: "The Inferno",
+        //         toppings: [
+        //             "chili",
+        //             "bacon",
+        //             "mushroom",
+        //             "basil",
+        //             "pepperoni",
+        //             "olive",
+        //             "sweetcorn",
+        //             "anchovy",
+        //             "mozzarella",
+        //             "pepper",
+        //             "tomato",
+        //         ],
+        //         id: 1,
+        //     },
+        // ];
     }
 
     @Get(":id")

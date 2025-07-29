@@ -22,7 +22,21 @@ export class ToppingsController {
 
     @Get()
     findAll() {
-        return this.toppingsService.findAll();
+        // return this.toppingsService.findAll();
+        return [
+            "anchovy",
+            "bacon",
+            "basil",
+            "chili",
+            "mozzarella",
+            "mushroom",
+            "olive",
+            "onion",
+            "pepper",
+            "pepperoni",
+            "sweetcorn",
+            "tomato",
+        ];
     }
 
     @Get(":id")
