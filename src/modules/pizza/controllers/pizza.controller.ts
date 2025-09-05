@@ -6,11 +6,11 @@ export class PizzaController {
     constructor(private pizzaService: PizzaService) {}
     @Get('pizzas')
     getAllPizzas() {
-        return this.pizzaService.getAll();
+        return this.pizzaService.getAllPizzas();
     }
 
     @Get('toppings')
     getAllToppingd() {
-        
+        return this.pizzaService.getAllToppings()
     }
 }
