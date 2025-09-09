@@ -1,21 +1,29 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { from } from "rxjs";
+import { from, Observable, switchMap } from "rxjs";
+import { Repository } from "typeorm";
 import { CreatePizzaDto } from "../dto/create-pizza.dto";
 import { UpdatePizzaDto } from "../dto/update-pizza.dto";
 import { PizzaEntity } from "../entities";
-import { PizzaRepository } from "../repositories";
 
 @Injectable()
 export class PizzasService {
     constructor(
-        @InjectRepository(PizzaEntity) private pizzaRepository: PizzaRepository,
+        @InjectRepository(PizzaEntity)
+        private pizzaRepository: Repository<PizzaEntity>,
     ) {}
 
-    async create(createPizzaDto: CreatePizzaDto) {
-        await this.pizzaRepository.save(
-            this.pizzaRepository.create(createPizzaDto),
-        );
+    create(createPizzaDto: CreatePizzaDto) {
+        try {
+            return from(
+                this.pizzaRepository.save(
+                    this.pizzaRepository.create(createPizzaDto),
+                ),
+            );
+        } catch (error) {
+            console.error(error);
+            throw new Error("Impossible de trouver la pizza recherchée");
+        }
     }
 
     findAll() {
@@ -23,14 +31,43 @@ export class PizzasService {
     }
 
     findOne(id: number) {
-        return `This action returns a #${id} pizza`;
+        try {
+            return from(this.pizzaRepository.findOneBy({ ["pizzaId"]: id }));
+        } catch (error) {
+            console.error(error);
+            throw new Error("Impossible de trouver la pizza recherchée");
+        }
     }
 
-    update(id: number, updatePizzaDto: UpdatePizzaDto) {
-        return `This action updates a #${id} pizza`;
+    update(
+        id: number,
+        updatePizzaDto: UpdatePizzaDto,
+    ): Observable<PizzaEntity | null> {
+        try {
+            return from(
+                this.pizzaRepository
+                    .createQueryBuilder()
+                    .update(PizzaEntity)
+                    .set({ name: updatePizzaDto.name })
+                    .where("pizzaId = :id", { id })
+                    .execute(),
+            ).pipe(
+                switchMap(() => {
+                    return this.findOne(id);
+                }),
+            );
+        } catch (error) {
+            console.error(error);
+            throw new Error("Impossible de trouver la pizza recherchée");
+        }
     }
 
     remove(id: number) {
-        return `This action removes a #${id} pizza`;
+        try {
+            return from(this.pizzaRepository.delete({ ["pizzaId"]: id }));
+        } catch (error) {
+            console.error(error);
+            throw new Error("Impossible de trouver la pizza recherchée");
+        }
     }
 }

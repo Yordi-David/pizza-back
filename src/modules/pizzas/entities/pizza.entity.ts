@@ -1,18 +1,18 @@
 import {
     Column,
     Entity,
-    JoinTable,
-    ManyToMany,
+    // JoinTable,
+    // ManyToMany,
     PrimaryGeneratedColumn,
 } from "typeorm";
-import { ToppingEntity } from "../../toppings/entities/topping.entity";
+// import { ToppingEntity } from "../../toppings/entities/topping.entity";
 
 @Entity({ name: "Pizza" })
 export class PizzaEntity {
     @PrimaryGeneratedColumn()
-    public id: number;
+    public pizzaId: number;
 
-    @Column({ name: "name" })
+    @Column({ name: "name", unique: true })
     public name: string;
 
     // @ManyToMany(() => ToppingEntity, (topping) => {}, {

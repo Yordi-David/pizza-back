@@ -1,8 +1,6 @@
 import { registerAs } from "@nestjs/config";
 
 export default registerAs("database", () => {
-    console.log(process.env);
-
     return {
         type: "mssql",
         host: process.env.DB_HOST,
