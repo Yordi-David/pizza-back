@@ -1,4 +1,4 @@
-import { PizzaController } from "./pizza.controller";
+import { PizzaController } from './pizza.controller';
 
 export const controllers = [
     PizzaController

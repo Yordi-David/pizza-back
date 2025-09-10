@@ -1,7 +1,9 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ToppingEntity } from './topping.entity';
 
-@Entity({name: 'Pizza'})
+@Entity({
+    name: 'Pizza'
+})
 export class PizzaEntity {
     @PrimaryGeneratedColumn('uuid')
     public id: string;

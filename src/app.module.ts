@@ -15,10 +15,12 @@ import { PizzaModule } from './modules/pizza/pizza.module';
 		}),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
-			useFactory: (configService: ConfigService) => ({
-				...configService.get('database')
-			}),
-			inject: [ConfigService]
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => {
+				return {
+					...configService.get('database')
+				}
+			}
 		}),
 		PizzaModule
 	],
