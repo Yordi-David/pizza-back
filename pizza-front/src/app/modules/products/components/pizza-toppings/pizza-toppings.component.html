@@ -1,0 +1,11 @@
+@if (selectedToppings$ | async; as selectedToppings) {
+  <div class="pizza-toppings">
+    @for (topping of allToppings; track topping) {
+      <button class="pizza-toppings-item" [ngClass]="{ 'active': selectedToppings[topping.id] }"
+        (click)="toggleItem(topping)">
+        <img [src]="'assets/img/toppings/singles/' + topping.name + '.svg'">
+        {{ topping.name }}
+      </button>
+    }
+  </div>
+}

@@ -1,0 +1,23 @@
+<div class="products">
+  <div class="products__new">
+    <a
+      class="btn btn__ok"
+      routerLink="./new">
+      New Pizza
+    </a>
+  </div>
+  <div class="products__list">
+    @if (pizzas$ | async; as pizzas) {
+      @if (pizzas.length < 1) {
+        <div>
+          No pizzas, add one to get started.
+        </div>
+      }
+      @for (pizza of (pizzas); track pizza) {
+        <app-pizza-item
+          [pizza]="pizza">
+        </app-pizza-item>
+      }
+    }
+  </div>
+</div>
