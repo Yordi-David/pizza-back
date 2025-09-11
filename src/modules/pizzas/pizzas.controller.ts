@@ -19,10 +19,10 @@ export class PizzasController {
     constructor(private readonly pizzasService: PizzasService) {}
 
     @Post() // CREATE A NEW PIZZA AND ADD IT IN DATABASE
-    create(@Body() createPizzaDto: CreatePizzaDto): Observable<string> {
+    create(@Body() createPizzaDto: CreatePizzaDto): Observable<any> {
         return this.pizzasService.create(createPizzaDto).pipe(
             map((resp) => {
-                return `La pizza ${resp.name} a bien été créée`;
+                return { message: `La pizza "${resp.name}" a bien été créée` };
             }),
         );
     }
@@ -30,25 +30,6 @@ export class PizzasController {
     @Get() // RETURN ALL THE EXISTINGS PIZZAS IN THE DATABASE
     findAll(): Observable<PizzaEntity[]> {
         return this.pizzasService.findAll();
-        // return [
-        //     {
-        //         name: "The Inferno",
-        //         toppings: [
-        //             "chili",
-        //             "bacon",
-        //             "mushroom",
-        //             "basil",
-        //             "pepperoni",
-        //             "olive",
-        //             "sweetcorn",
-        //             "anchovy",
-        //             "mozzarella",
-        //             "pepper",
-        //             "tomato",
-        //         ],
-        //         id: 1,
-        //     },
-        // ];
     }
 
     @Get(":id") // RETURN ONE SPECIFIC PIZZA WITH THE GIVEN ID
@@ -68,8 +49,10 @@ export class PizzasController {
 
     @Delete(":id") // DELETE ONE SPECIFIC PIZZA WITH THE GIVEN ID
     remove(@Param("id") id: string) {
-        return this.pizzasService
-            .remove(+id)
-            .pipe(map(() => `La pizza a bien été supprimée`));
+        return this.pizzasService.remove(+id).pipe(
+            map(() => {
+                return { message: `La pizza a bien été supprimée` };
+            }),
+        );
     }
 }

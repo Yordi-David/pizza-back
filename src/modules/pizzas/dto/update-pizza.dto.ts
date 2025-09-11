@@ -4,5 +4,5 @@ export class UpdatePizzaDto {
     @MaxLength(256, { message: "Pizza's name too long" })
     name: string;
 
-    id: number;
+    toppings: number[];
 }

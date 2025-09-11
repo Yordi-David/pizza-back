@@ -1,15 +1,16 @@
 import {
-    Controller,
-    Get,
-    Post,
     Body,
-    Patch,
-    Param,
+    Controller,
     Delete,
+    Get,
+    Param,
+    Post,
+    Put,
 } from "@nestjs/common";
-import { ToppingsService } from "./toppings.service";
 import { CreateToppingDto } from "./dto/create-topping.dto";
 import { UpdateToppingDto } from "./dto/update-topping.dto";
+import { ToppingsService } from "./toppings.service";
+import { map } from "rxjs";
 
 @Controller("toppings")
 export class ToppingsController {
@@ -17,26 +18,16 @@ export class ToppingsController {
 
     @Post()
     create(@Body() createToppingDto: CreateToppingDto) {
-        return this.toppingsService.create(createToppingDto);
+        return this.toppingsService.create(createToppingDto).pipe(
+            map((resp) => {
+                return `Le topping "${resp.name}" a bien été créé`;
+            }),
+        );
     }
 
     @Get()
     findAll() {
-        // return this.toppingsService.findAll();
-        return [
-            "anchovy",
-            "bacon",
-            "basil",
-            "chili",
-            "mozzarella",
-            "mushroom",
-            "olive",
-            "onion",
-            "pepper",
-            "pepperoni",
-            "sweetcorn",
-            "tomato",
-        ];
+        return this.toppingsService.findAll();
     }
 
     @Get(":id")
@@ -44,7 +35,7 @@ export class ToppingsController {
         return this.toppingsService.findOne(+id);
     }
 
-    @Patch(":id")
+    @Put(":id")
     update(
         @Param("id") id: string,
         @Body() updateToppingDto: UpdateToppingDto,
@@ -54,6 +45,8 @@ export class ToppingsController {
 
     @Delete(":id")
     remove(@Param("id") id: string) {
-        return this.toppingsService.remove(+id);
+        return this.toppingsService
+            .remove(+id)
+            .pipe(map(() => `Le topping a bien été supprimé`));
     }
 }
